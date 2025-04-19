@@ -5,7 +5,7 @@ public class User
 {
     public  Guid id { get; init; }
     public string login { get; set; }
-    public string password { get; set; }
+    public string passwordHash { get; set; }
     public string name { set; get; }
     public string surname { set; get; }
     public string inn { set; get; }
@@ -18,7 +18,19 @@ public class User
         get { return phone; }
     }
     public DateTime registerTime { init; get; }
-    
+
+    public User(Guid id, string login, string passwordHash, string name,
+        string surname, string inn, string phone, DateTime registerTime)
+    {
+        this.id = id;
+        this.login = login;
+        this.passwordHash = passwordHash;
+        this.name = name;
+        this.surname = surname;
+        this.inn = inn;
+        this.phone = phone;
+        this.registerTime = registerTime;
+    }
     public User() 
     {
         this.id = Guid.NewGuid();
