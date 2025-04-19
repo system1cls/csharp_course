@@ -3,26 +3,26 @@ namespace App.Practice3;
 
 public class User
 {
-    private readonly Guid id;
-    private string login;
-    private string password;
-    private readonly string name;
-    private readonly string surname;
-    private readonly string inn;
-    private string phone;
-    private readonly DateTime registerTime;
-
-    public User(Guid id, string login, string password, string name, string surname,
-        string inn, string phone, DateTime registerTime)
+    public  Guid id { get; init; }
+    public string login { get; set; }
+    public string password { get; set; }
+    public string name { set; get; }
+    public string surname { set; get; }
+    public string inn { set; get; }
+    public string phone {
+        set
+        {
+            if (TryUpdatePhone(value)) phone = value;
+            else phone = "";
+        }
+        get { return phone; }
+    }
+    public DateTime registerTime { init; get; }
+    
+    public User() 
     {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.inn = inn;
-        this.phone = phone;
-        this.registerTime = registerTime;
+        this.id = Guid.NewGuid();
+        this.registerTime = DateTime.Now;
     }
 
     public string GetUserFullName()
