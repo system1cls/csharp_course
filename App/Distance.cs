@@ -13,6 +13,10 @@ public static class Distance
         
         double myx1, myx2, myy1, myy2;
 
+        
+        /*
+         * Guarantee that myx2 > myx1 to know the order of values
+         */
         if (x2 < x1)
         {
             myx1 = x2;
@@ -33,7 +37,7 @@ public static class Distance
         
         double a, b;
 
-        double TOLERANCE = 0.000001;
+        var TOLERANCE = 0.000001;
         if (Math.Abs(x1 - x2) < TOLERANCE)
         {
             double temp1 = myy1;
@@ -49,27 +53,24 @@ public static class Distance
 
         var dist = Math.Abs(a * x - y + b) / Math.Sqrt(a * a + 1);
         // координата точки соприкосновения
-        double xs;
+        double touchPointX;
         
         if (a != 0)
         {
             // Расстояние от данной точки до точки соприкосновения по х 
-            var xd = dist / Math.Sqrt(1 + 1 / a * a);
-
+            var distTouchPointGetPoint = dist / Math.Sqrt(1 + 1 / a * a);
             
-
-
-            if (a * x + b > y) xs = x - xd * Math.Sign(a);
-            else xs = x + xd * Math.Sign(a);
+            if (a * x + b > y) touchPointX = x - distTouchPointGetPoint * Math.Sign(a);
+            else touchPointX = x + distTouchPointGetPoint * Math.Sign(a);
             
         }
         else
         {
-            xs = x;
+            touchPointX = x;
         }
 
-        if (myx1 <= xs && xs <= myx2) return dist;
-        if (xs <= myx1) return Math.Sqrt((x - myx1) * (x - myx1) + (y - myy1) * (y - myy1));
+        if (myx1 <= touchPointX && touchPointX <= myx2) return dist;
+        if (touchPointX <= myx1) return Math.Sqrt((x - myx1) * (x - myx1) + (y - myy1) * (y - myy1));
         else return Math.Sqrt((x - myx2) * (x - myx2) + (y - myy2) * (y - myy2));
         
     }

@@ -4,7 +4,6 @@ namespace AppTests;
 
 public class PricesTests
 {
-    //TODO напишите свои тесты
     [TestCase(1000052, "рубля")]
     [TestCase(25, "рублей")]
     [TestCase(3, "рубля")]
@@ -37,6 +36,15 @@ public class PricesTests
     public void TestPasses_When_Result_Correct(int price, string expected)
     {
         var actual = Prices.GetCurrencyAlias(price, false, false);
+        Assert.That(actual, Is.EqualTo(expected));
+    }
+
+    [TestCase(8, true, true, "Руб.")]
+    [TestCase(1000, false, true, "Рублей")]
+    [TestCase(1000, true, false, "руб.")]
+    public void TestAdditional(int price, bool isShort, bool isFirstCapital, string expected)
+    {
+        var actual = Prices.GetCurrencyAlias(price, isShort, isFirstCapital);
         Assert.That(actual, Is.EqualTo(expected));
     }
 }
