@@ -8,7 +8,7 @@ public static class UserCreator
         return user;
     }   
 
-    private static string getHash(string password)
+    public static string getHash(string password)
     {
         System.Security.Cryptography.HMACMD5 hash = new System.Security.Cryptography.HMACMD5();
         hash.Initialize();
