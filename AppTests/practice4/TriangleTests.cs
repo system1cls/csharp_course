@@ -9,7 +9,7 @@ public class TriangleTests
     {
         IGeometry triangle = new Triangle(
             new MyVertex(1, 1),
-            new MyVertex(1, 2),
+            new MyVertex(2, 2),
             new MyVertex(3, 1)
         );
         
