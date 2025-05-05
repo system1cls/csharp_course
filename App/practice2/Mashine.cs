@@ -6,7 +6,7 @@ public class Mashine
 {
     public static string CalculateString(string[] codeLines)
     {
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
 
         foreach (var str in codeLines)
         {
@@ -16,8 +16,8 @@ public class Mashine
                     builder.Append(str.Substring(5, str.Length - 5));
                     break;
                 case "pop ":
-                    int cntToDel = Convert.ToInt32(str.Substring(4, str.Length - 4));
-                    builder.Remove(builder.Length - cntToDel, cntToDel);
+                    var countToDelete = Convert.ToInt32(str.Substring(4, str.Length - 4));
+                    builder.Remove(builder.Length - countToDelete, countToDelete);
                     break;
             }
         }

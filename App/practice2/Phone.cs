@@ -6,7 +6,7 @@ public class Phone
     {
         for (int i = 0; i < inputString.Length; i++)
         {
-            int new_it = check(inputString, i);
+            var new_it = check(inputString, i);
             if (new_it >= 0)
             {
                 parsedPhone = inputString.Substring(i, new_it - i);
@@ -28,7 +28,7 @@ public class Phone
         {
             case '7':
             case '8':
-                int new_it = checkSep(inputString, it + 1);
+                var new_it = checkSep(inputString, it + 1);
 
                 if (new_it < 0) return -1;
                 if (new_it == it + 1 || new_it == it + 2)
@@ -55,7 +55,7 @@ public class Phone
 
     static int checkBlock(string inputString, int it, int cnt)
     {
-        int new_it = checkSep(inputString, it);
+        var new_it = checkSep(inputString, it);
         if (new_it < 0) return -1;
         
         new_it = checkdigits(inputString, new_it, cnt); 
@@ -64,7 +64,7 @@ public class Phone
     
     static int checkSep(string inputString, int it)
     {
-        bool sc = false;
+        var sc = false;
         
         while (it < inputString.Length) {
 
@@ -99,7 +99,7 @@ public class Phone
     
     static int checkdigits(string inputString, int it, int count)
     {
-        int new_it = it;
+        var new_it = it;
         for (; new_it < it + count; new_it++)
         {
             if (new_it >= inputString.Length) return -1;

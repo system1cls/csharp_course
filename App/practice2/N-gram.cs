@@ -26,11 +26,11 @@ public class N_gram
         
         foreach (var str in inputString.Split("."))
         {
-            string[] words = str.Split(" ");
+            var words = str.Split(" ");
 
             words = words.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
             
-            for (int i = 0; i < words.Length; i++)
+            for (var i = 0; i < words.Length; i++)
             {
                 if (i != words.Length - 1)
                 {
@@ -65,7 +65,7 @@ public class N_gram
         }
 
 
-        Dictionary<string, string> ans = new Dictionary<string, string>();
+        var ans = new Dictionary<string, string>();
         foreach (var key in frequencyAnalysis.Keys)
         {
             int max = 0;
