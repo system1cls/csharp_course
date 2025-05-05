@@ -21,6 +21,8 @@ public class UserTest
         Assert.True(checkString(user.phone, "89235547406"));
         
         Assert.True(checkString(user.GetUserFullName(), "name surname"));
+
+        Assert.True(checkString(user.passwordHash, UserCreator.getHash("password")));
     }
 
 
