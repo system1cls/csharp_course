@@ -9,13 +9,16 @@ public class User
     public string name { set; get; }
     public string surname { set; get; }
     public string inn { set; get; }
-    public string phone {
+
+    private string _phone;
+    
+    public string phone { 
         set
         {
-            if (TryUpdatePhone(value)) phone = value;
-            else phone = "";
+            if (TryUpdatePhone(value)) _phone = value;
+            else _phone = "";
         }
-        get { return phone; }
+        get { return _phone; }
     }
     public DateTime registerTime { init; get; }
 
@@ -46,7 +49,7 @@ public class User
     {
         if (IsPhoneValid(phone, out phone))
         {
-            this.phone = phone;
+            this._phone = phone;
             return true;
         }
         return false;
