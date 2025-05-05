@@ -1,4 +1,6 @@
-﻿namespace App.Practice3;
+﻿using System.Text;
+
+namespace App.Practice3;
 
 public static class UserCreator
 {
@@ -10,9 +12,12 @@ public static class UserCreator
 
     public static string getHash(string password)
     {
-        System.Security.Cryptography.HMACMD5 hash = new System.Security.Cryptography.HMACMD5();
-        hash.Initialize();
-        hash.HashName = password;
-        return hash.HashName;
+        
+        
+        using (var hasher = new System.Security.Cryptography.HMACSHA256(Encoding.UTF8.GetBytes(password)))
+        {
+            var hash = hasher.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(hash);
+        }
     }
 }

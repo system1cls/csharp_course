@@ -30,6 +30,11 @@ public class UsersService : IUsersService
             createUserDto.Inn,
             createUserDto.Phone
         );
+
+        foreach (var user in users)
+        {
+            if (user.Equals(newUser)) throw new Exception("This user is already exists");
+        }
         
         users.Add(newUser);
         return newUser.id;
@@ -51,7 +56,7 @@ public class UsersService : IUsersService
         {
             if (user.id.Equals(userId))
             {
-                if (user.passwordHash.Equals(UserCreator.getHash(oldPassword)))
+                if (user.passwordHash.SequenceEqual(UserCreator.getHash(oldPassword)))
                     user.passwordHash = UserCreator.getHash(newPassword);
                 else throw new Exception("Passwords do not match");
 
@@ -81,12 +86,34 @@ public class UsersService : IUsersService
     {
         foreach (var user in users)
         {
-            if (user.login.Equals(login) && user.passwordHash.Equals(UserCreator.getHash(password)))
+            if (loginCheck(user.login, login) && hashCheck(user.passwordHash, UserCreator.getHash(password)))
             {
                 return user.id;
             } 
         }
         
         throw new Exception("Wrong Login or Password");
+    }
+
+
+    private bool loginCheck(string login, string gettedLogin)
+    {
+        if (gettedLogin is null) throw new ArgumentNullException(nameof(gettedLogin));
+        
+        if (login.Length != gettedLogin.Length) return false;
+        
+        for (int i = 0; i < login.Length; i++) if (login[i] != gettedLogin[i]) return false;
+        
+        return true;
+    }
+
+
+    private bool hashCheck(string hash, string gettedHash)
+    {
+        if (hash.Length != gettedHash.Length) return false;
+        
+        for (int i = 0; i < hash.Length; i++) if (hash[i] != gettedHash[i]) return false;
+        
+        return true;
     }
 }

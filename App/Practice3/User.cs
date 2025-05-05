@@ -9,15 +9,19 @@ public class User
     public string name { set; get; }
     public string surname { set; get; }
     public string inn { set; get; }
+
+    private string _phone;
     public string phone {
         set
         {
-            if (TryUpdatePhone(value)) phone = value;
-            else phone = "";
+            TryUpdatePhone(value);
+
         }
-        get { return phone; }
+        get { return _phone; }
     }
     public DateTime registerTime { init; get; }
+
+    private bool isChecked = false;
 
     public User(Guid id, string login, string passwordHash, string name,
         string surname, string inn, string phone, DateTime registerTime)
@@ -42,11 +46,13 @@ public class User
         return name + " " + surname;
     }
 
-    public bool TryUpdatePhone(string phone)
+    public bool TryUpdatePhone(string value)
     {
-        if (IsPhoneValid(phone, out phone))
+        string retPhone;
+        if (IsPhoneValid(value, out retPhone))
         {
-            this.phone = phone;
+            isChecked = true;
+            this._phone = retPhone;
             return true;
         }
         return false;
@@ -160,5 +166,15 @@ public class User
         
         return new_it;
     }
-    
+
+
+    public override bool Equals(object obj)
+    { 
+        if (obj is null) return false;
+        if (obj == this) return true;
+        
+        User newUser = obj as User;
+        return newUser.login == login && newUser.passwordHash == passwordHash;
+        
+    }
 }
