@@ -8,7 +8,7 @@ public class ClockWiseComeparerTests
     [Test]
     public void ClockWiseComeparerTest()
     {
-        MyVertex []vertexes = new MyVertex[4];
+        I2DVertex[]vertexes = new I2DVertex[4];
 
         vertexes[0] = new MyVertex(-5, 1);
         vertexes[1] = new MyVertex(1, 1);

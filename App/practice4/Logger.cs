@@ -2,7 +2,7 @@
 
 public class Logger
 {
-    public string logGeometry(IGeometry geometry)
+    public string LogGeometry(IGeometry geometry)
     {
         if (geometry is Square) return "Квадрат";
         if (geometry is Rectangle) return "Прямоугольник";

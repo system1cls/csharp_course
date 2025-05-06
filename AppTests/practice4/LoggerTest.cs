@@ -30,8 +30,8 @@ public class LoggerTest
         
         Logger logger = new Logger();
         
-        Assert.That(logger.logGeometry(triangle).Equals("Треугольник"));
-        Assert.That(logger.logGeometry(square).Equals("Квадрат"));
-        Assert.That(logger.logGeometry(rect).Equals("Прямоугольник"));
+        Assert.That(logger.LogGeometry(triangle).Equals("Треугольник"));
+        Assert.That(logger.LogGeometry(square).Equals("Квадрат"));
+        Assert.That(logger.LogGeometry(rect).Equals("Прямоугольник"));
     }
 }
