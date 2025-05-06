@@ -45,10 +45,11 @@ public class User
     {
         for (int i = 0; i < inputString.Length; i++)
         {
-            int new_it = Check(inputString, i);
-            if (new_it >= 0)
+            int newIt;
+            newIt = Check(inputString, i);
+            if (newIt >= 0)
             {
-                parsedPhone = inputString.Substring(i, new_it - i);
+                parsedPhone = inputString.Substring(i, newIt - i);
                 return true;
             }
         }
@@ -67,25 +68,25 @@ public class User
         {
             case '7':
             case '8':
-                int new_it = checkSep(inputString, it + 1);
+                var newIt = CheckSep(inputString, it + 1);
 
-                if (new_it < 0) return -1;
-                if (new_it == it + 1 || new_it == it + 2)
+                if (newIt < 0) return -1;
+                if (newIt == it + 1 || newIt == it + 2)
                 {
-                    new_it = Сheckdigits(inputString, new_it, 3);
-                    if (new_it == -1) return -1;
+                    newIt = Сheckdigits(inputString, newIt, 3);
+                    if (newIt == -1) return -1;
                 }
 
-                new_it = CheckBlock(inputString, new_it, 3);
-                if (new_it == -1) return -1;
+                newIt = CheckBlock(inputString, newIt, 3);
+                if (newIt == -1) return -1;
                 
-                new_it = CheckBlock(inputString, new_it, 2);
-                if (new_it == -1) return -1;
+                newIt = CheckBlock(inputString, newIt, 2);
+                if (newIt == -1) return -1;
                 
-                new_it = CheckBlock(inputString, new_it, 2);
-                if (new_it == -1) return -1;
+                newIt = CheckBlock(inputString, newIt, 2);
+                if (newIt == -1) return -1;
 
-                return new_it;
+                return newIt;
                 
             default: 
                 return -1;
@@ -94,16 +95,16 @@ public class User
 
     static int CheckBlock(string inputString, int it, int cnt)
     {
-        int new_it = checkSep(inputString, it);
-        if (new_it < 0) return -1;
+        var newIt = CheckSep(inputString, it);
+        if (newIt < 0) return -1;
         
-        new_it = Сheckdigits(inputString, new_it, cnt); 
-        return new_it;
+        newIt = Сheckdigits(inputString, newIt, cnt); 
+        return newIt;
     }
     
-    static int checkSep(string inputString, int it)
+    static int CheckSep(string inputString, int it)
     {
-        bool sc = false;
+        var sc = false;
         
         while (it < inputString.Length) {
 
@@ -138,15 +139,15 @@ public class User
     
     static int Сheckdigits(string inputString, int it, int count)
     {
-        int new_it = it;
-        for (; new_it < it + count; new_it++)
+        var newIt = it;
+        for (; newIt < it + count; newIt++)
         {
-            if (new_it >= inputString.Length) return -1;
-            if (!Char.IsDigit(inputString[new_it])) return -1;
+            if (newIt >= inputString.Length) return -1;
+            if (!Char.IsDigit(inputString[newIt])) return -1;
         }
         
         
-        return new_it;
+        return newIt;
     }
     
 }
