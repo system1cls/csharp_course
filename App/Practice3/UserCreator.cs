@@ -4,13 +4,13 @@ namespace App.Practice3;
 
 public static class UserCreator
 {
-    public static User createUser(string username, string password, string name, string surname, string inn, string phone)
+    public static User CreateUser(string username, string password, string name, string surname, string inn, string phone)
     {
-        User user = new User(Guid.NewGuid(), username, getHash(password), name, surname, inn, phone, DateTime.Now);
+        User user = new User(Guid.NewGuid(), username, GetHash(password), name, surname, inn, phone, DateTime.Now);
         return user;
     }   
 
-    public static string getHash(string password)
+    public static string GetHash(string password)
     {
         
         using (var hasher = new System.Security.Cryptography.HMACSHA256(Encoding.UTF8.GetBytes(password)))

@@ -7,7 +7,7 @@ public class UserTest
     [Test]
     public void test1()
     {
-        User user = UserCreator.createUser(
+        var user = UserCreator.CreateUser(
             "login",
             "password",
             "name",
@@ -18,15 +18,15 @@ public class UserTest
 
         Assert.True(user.TryUpdatePhone("89235547406"));
         
-        Assert.True(checkString(user.phone, "89235547406"));
+        Assert.True(CheckString(user.Phone, "89235547406"));
         
-        Assert.True(checkString(user.GetUserFullName(), "name surname"));
+        Assert.True(CheckString(user.GetUserFullName(), "name surname"));
 
-        Assert.True(checkString(user.passwordHash, UserCreator.getHash("password")));
+        Assert.True(CheckString(user.PasswordHash, UserCreator.GetHash("password")));
     }
 
 
-    private bool checkString(string str1, string str2)
+    private bool CheckString(string str1, string str2)
     {
         if (str1.Length != str2.Length) return false;
 
