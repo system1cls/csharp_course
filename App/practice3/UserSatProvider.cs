@@ -2,43 +2,42 @@
 
 public class UserSatProvider
 {
-    public UserActionStatResponse GetUserActionStat(UserActionStatRequest request, List<UserActionItem> userActionItems)  
+    public UserActionStatResponse GetUserActionStat(UserActionStatRequest request, List<UserActionItem> userActionItems)
     {
         if (request == null) return null;
-        switch (request.DateGroupType)
+        return request.DateGroupType switch
         {
-            case DateGroupTypes.Daily : return byDays(request, userActionItems);
-            case DateGroupTypes.Monthly: return byMonth(request, userActionItems);
-            default: return null;
-        }
-        
+            DateGroupTypes.Daily => ByDays(request, userActionItems),
+            DateGroupTypes.Monthly => ByMonth(request, userActionItems),
+            _ => null
+        };
     }
 
 
-    private UserActionStatResponse byDays(UserActionStatRequest request, List<UserActionItem> userActionItems)
+    private UserActionStatResponse ByDays(UserActionStatRequest request, List<UserActionItem> userActionItems)
     {
-        UserActionStatResponse response = new UserActionStatResponse();
+        var response = new UserActionStatResponse();
         response.UserActionStat = new List<UserActionStatItem>();
-        for (int i = 0; i < userActionItems.Count; i++)
+        for (var i = 0; i < userActionItems.Count; i++)
         {
-            UserActionItem item = userActionItems[i];
+            var item = userActionItems[i];
             
-            if (isFitDate(request, item))
+            if (IsFitDate(request, item))
             {
-                int it = findByDay(item, response);
-                addByDay(it, response, item);
+                var it = FindByDay(item, response);
+                AddByDay(it, response, item);
             }
         }
         return response;
     }
-    private bool isFitDate(UserActionStatRequest request, UserActionItem userActionItem)
+    private bool IsFitDate(UserActionStatRequest request, UserActionItem userActionItem)
     {
         return userActionItem.Date < request.EndDate && userActionItem.Date >= request.StartDate;
     }
 
-    private int findByDay(UserActionItem item, UserActionStatResponse response)
+    private int FindByDay(UserActionItem item, UserActionStatResponse response)
     {
-        for (int i = 0; i < response.UserActionStat.Count; i++)
+        for (var i = 0; i < response.UserActionStat.Count; i++)
         {
             if (response.UserActionStat[i].StartDate == item.Date)
             {
@@ -49,11 +48,11 @@ public class UserSatProvider
         return -1;
     }
 
-    private void addByDay(int it, UserActionStatResponse response, UserActionItem item)
+    private void AddByDay(int it, UserActionStatResponse response, UserActionItem item)
     {
         if (it == -1)
         {
-            UserActionStatItem newStat = new UserActionStatItem();
+            var newStat = new UserActionStatItem();
             newStat.StartDate = newStat.EndDate = item.Date;
             newStat.ActionMetrics = new Dictionary<ActionTypes, int>();
             newStat.ActionMetrics.Add(item.Action, item.Count);
@@ -61,7 +60,7 @@ public class UserSatProvider
         }
         else
         {
-            UserActionStatItem stat = response.UserActionStat[it];
+            var stat = response.UserActionStat[it];
 
             if (stat.ActionMetrics.ContainsKey(item.Action))
             {
@@ -74,26 +73,26 @@ public class UserSatProvider
         }
     }
 
-    private UserActionStatResponse byMonth(UserActionStatRequest request, List<UserActionItem> userActionItems)
+    private UserActionStatResponse ByMonth(UserActionStatRequest request, List<UserActionItem> userActionItems)
     {
         UserActionStatResponse response = new UserActionStatResponse();
         response.UserActionStat = new List<UserActionStatItem>();
-        for (int i = 0; i < userActionItems.Count; i++)
+        for (var i = 0; i < userActionItems.Count; i++)
         {
-            UserActionItem item = userActionItems[i];
-            if (isFitDate(request, item))
+            var item = userActionItems[i];
+            if (IsFitDate(request, item))
             {
-                int it = findByMon(item, response);
-                addByMon(it, response, item, request);
+                int it = FindByMon(item, response);
+                AddByMon(it, response, item, request);
             }
         }
         return response;
     }
 
 
-    private int findByMon(UserActionItem item, UserActionStatResponse response)
+    private int FindByMon(UserActionItem item, UserActionStatResponse response)
     {
-        for (int i = 0; i < response.UserActionStat.Count; i++)
+        for (var i = 0; i < response.UserActionStat.Count; i++)
         {
             if (response.UserActionStat[i].StartDate.Year == item.Date.Year &&
                 response.UserActionStat[i].StartDate.Month == item.Date.Month)
@@ -105,21 +104,21 @@ public class UserSatProvider
         return -1;
     }
 
-    private void addByMon(int it, UserActionStatResponse response, UserActionItem item, UserActionStatRequest request)
+    private void AddByMon(int it, UserActionStatResponse response, UserActionItem item, UserActionStatRequest request)
     {
         if (it == -1)
         {
-            UserActionStatItem newStat = new UserActionStatItem();
+            var newStat = new UserActionStatItem();
 
-            int startDay = 0;
+            var startDay = 0;
             if (item.Date.Year == request.StartDate.Year && item.Date.Month == request.StartDate.Month)
                 startDay = request.StartDate.Day;
             else startDay = 1;
             
-            int endDay = 0;
+            var endDay = 0;
             if (item.Date.Year == request.EndDate.Year && item.Date.Month == request.EndDate.Month)
                 endDay = request.EndDate.Day;
-            else endDay = getDays(item.Date.Month, item.Date.Year);
+            else endDay = GetDays(item.Date.Month, item.Date.Year);
             
             newStat.StartDate = new DateTime(item.Date.Year, item.Date.Month, startDay);
             newStat.EndDate = new DateTime(item.Date.Year, item.Date.Month,endDay);
@@ -138,7 +137,7 @@ public class UserSatProvider
         }
     }
 
-    private int getDays(int it, int year)
+    private int GetDays(int it, int year)
     {
         switch (it) 
         {
@@ -157,17 +156,4 @@ public class UserSatProvider
                 return 30;
         }
     }
-
-    private int max(int a, int b)
-    {
-        if (a > b) return a;
-        else return b;
-    }
-    
-    private int min(int a, int b)
-    {
-        if (a > b) return b;
-        else return a;
-    }
-
 }
