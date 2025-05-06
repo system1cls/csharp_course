@@ -4,15 +4,15 @@ namespace App.practice4;
 
 public class UsersService : IUsersService
 {
-    List<User> users = new List<User>();
+    private List<User> _users = new List<User>();
     
     public User GetUser(Guid userId)
     {
-        if (users is null) throw new ArgumentNullException(nameof(users));
+        if (_users is null) throw new ArgumentNullException(nameof(_users));
 
-        foreach (var user in users)
+        foreach (var user in _users)
         {
-           if (user.id.Equals(userId)) return user;
+           if (user.Id.Equals(userId)) return user;
         }
 
         return null;
@@ -22,7 +22,7 @@ public class UsersService : IUsersService
     {
         if (createUserDto is null) throw new ArgumentNullException(nameof(createUserDto));
         
-        User newUser = UserCreator.createUser(
+        var newUser = UserCreator.CreateUser(
             createUserDto.Login,
             createUserDto.Password,
             createUserDto.Name,
@@ -31,33 +31,33 @@ public class UsersService : IUsersService
             createUserDto.Phone
         );
 
-        foreach (var user in users)
+        foreach (var user in _users)
         {
             if (user.Equals(newUser)) throw new Exception("This user is already exists");
         }
         
-        users.Add(newUser);
-        return newUser.id;
+        _users.Add(newUser);
+        return newUser.Id;
     }
 
     public void DeleteUser(Guid userId)
     {
 
-        for (int i = 0; i < users.Count; i++)
+        for (var i = 0; i < _users.Count; i++)
         {
-            if (users[i].id.Equals(userId)) users.RemoveAt(i);
+            if (_users[i].Id.Equals(userId)) _users.RemoveAt(i);
             return;
         }
     }
 
     public void ChangePassword(Guid userId, string oldPassword, string newPassword)
     {
-        foreach (var user in users)
+        foreach (var user in _users)
         {
-            if (user.id.Equals(userId))
+            if (user.Id.Equals(userId))
             {
-                if (user.passwordHash.SequenceEqual(UserCreator.getHash(oldPassword)))
-                    user.passwordHash = UserCreator.getHash(newPassword);
+                if (user.PasswordHash.SequenceEqual(UserCreator.GetHash(oldPassword)))
+                    user.PasswordHash = UserCreator.GetHash(newPassword);
                 else throw new Exception("Passwords do not match");
 
                 return;
@@ -69,14 +69,14 @@ public class UsersService : IUsersService
     {
         if (updateUserDto is null) throw new ArgumentNullException(nameof(updateUserDto));
 
-        foreach (var user in users)
+        foreach (var user in _users)
         {
-            if (user.id.Equals(userId))
+            if (user.Id.Equals(userId))
             {
-                user.name = updateUserDto.Name;
-                user.surname = updateUserDto.Surname;
-                user.inn = updateUserDto.Inn;
-                user.phone = updateUserDto.Phone;
+                user.Name = updateUserDto.Name;
+                user.Surname = updateUserDto.Surname;
+                user.Inn = updateUserDto.Inn;
+                user.Phone = updateUserDto.Phone;
                 return;
             }
         }
@@ -84,11 +84,11 @@ public class UsersService : IUsersService
 
     public Guid LogIn(string login, string password)
     {
-        foreach (var user in users)
+        foreach (var user in _users)
         {
-            if (loginCheck(user.login, login) && hashCheck(user.passwordHash, UserCreator.getHash(password)))
+            if (LoginCheck(user.Login, login) && HashCheck(user.PasswordHash, UserCreator.GetHash(password)))
             {
-                return user.id;
+                return user.Id;
             } 
         }
         
@@ -96,23 +96,23 @@ public class UsersService : IUsersService
     }
 
 
-    private bool loginCheck(string login, string gettedLogin)
+    private bool LoginCheck(string login, string gettedLogin)
     {
         if (gettedLogin is null) throw new ArgumentNullException(nameof(gettedLogin));
         
         if (login.Length != gettedLogin.Length) return false;
         
-        for (int i = 0; i < login.Length; i++) if (login[i] != gettedLogin[i]) return false;
+        for (var i = 0; i < login.Length; i++) if (login[i] != gettedLogin[i]) return false;
         
         return true;
     }
 
 
-    private bool hashCheck(string hash, string gettedHash)
+    private bool HashCheck(string hash, string gettedHash)
     {
         if (hash.Length != gettedHash.Length) return false;
         
-        for (int i = 0; i < hash.Length; i++) if (hash[i] != gettedHash[i]) return false;
+        for (var i = 0; i < hash.Length; i++) if (hash[i] != gettedHash[i]) return false;
         
         return true;
     }
