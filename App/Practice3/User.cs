@@ -3,15 +3,15 @@ namespace App.Practice3;
 
 public class User
 {
-    public  Guid id { get; init; }
-    public string login { get; set; }
-    public string password { get; set; }
-    public string name { set; get; }
-    public string surname { set; get; }
-    public string inn { set; get; }
+    public  Guid Id { get; init; }
+    public string Login { get; set; }
+    public string Password { get; set; }
+    public string Name { set; get; }
+    public string Surname { set; get; }
+    public string Inn { set; get; }
 
     private string _phone;
-    public string phone {
+    public string Phone {
         set
         {
             if (TryUpdatePhone(value)) _phone = value;
@@ -19,18 +19,18 @@ public class User
         }
         get { return _phone; }
     }
-    public DateTime registerTime { init; get; }
+    public DateTime RegisterTime { init; get; }
     
     public User() 
     {
-        this.id = Guid.NewGuid();
-        this.registerTime = DateTime.Now;
+        this.Id = Guid.NewGuid();
+        this.RegisterTime = DateTime.Now;
     }
     
 
     public string GetUserFullName()
     {
-        return name + " " + surname;
+        return Name + " " + Surname;
     }
 
     public bool TryUpdatePhone(string phone)
@@ -46,12 +46,12 @@ public class User
     
     private static bool IsPhoneValid(string inputString, out string parsedPhone) 
     {
-        for (int i = 0; i < inputString.Length; i++)
+        for (var i = 0; i < inputString.Length; i++)
         {
-            int new_it = check(inputString, i);
-            if (new_it >= 0)
+            var newIt = Check(inputString, i);
+            if (newIt >= 0)
             {
-                parsedPhone = inputString.Substring(i, new_it - i);
+                parsedPhone = inputString.Substring(i, newIt - i);
                 return true;
             }
         }
@@ -60,7 +60,7 @@ public class User
         return false;
     }
 
-    static int check(string inputString, int it)
+    static int Check(string inputString, int it)
     {
         if (inputString[it] == '+') it++;
         
@@ -70,43 +70,43 @@ public class User
         {
             case '7':
             case '8':
-                int new_it = checkSep(inputString, it + 1);
+                var newIt = CheckSep(inputString, it + 1);
 
-                if (new_it < 0) return -1;
-                if (new_it == it + 1 || new_it == it + 2)
+                if (newIt < 0) return -1;
+                if (newIt == it + 1 || newIt == it + 2)
                 {
-                    new_it = checkdigits(inputString, new_it, 3);
-                    if (new_it == -1) return -1;
+                    newIt = Checkdigits(inputString, newIt, 3);
+                    if (newIt == -1) return -1;
                 }
 
-                new_it = checkBlock(inputString, new_it, 3);
-                if (new_it == -1) return -1;
+                newIt = CheckBlock(inputString, newIt, 3);
+                if (newIt == -1) return -1;
                 
-                new_it = checkBlock(inputString, new_it, 2);
-                if (new_it == -1) return -1;
+                newIt = CheckBlock(inputString, newIt, 2);
+                if (newIt == -1) return -1;
                 
-                new_it = checkBlock(inputString, new_it, 2);
-                if (new_it == -1) return -1;
+                newIt = CheckBlock(inputString, newIt, 2);
+                if (newIt == -1) return -1;
 
-                return new_it;
+                return newIt;
                 
             default: 
                 return -1;
         }
     }
 
-    static int checkBlock(string inputString, int it, int cnt)
+    static int CheckBlock(string inputString, int it, int cnt)
     {
-        int new_it = checkSep(inputString, it);
-        if (new_it < 0) return -1;
+        var newIt = CheckSep(inputString, it);
+        if (newIt < 0) return -1;
         
-        new_it = checkdigits(inputString, new_it, cnt); 
-        return new_it;
+        newIt = Checkdigits(inputString, newIt, cnt); 
+        return newIt;
     }
     
-    static int checkSep(string inputString, int it)
+    static int CheckSep(string inputString, int it)
     {
-        bool sc = false;
+        var sc = false;
         
         while (it < inputString.Length) {
 
@@ -114,7 +114,7 @@ public class User
             {
 
                 case '(':
-                    it = checkdigits(inputString, it + 1, 3);
+                    it = Checkdigits(inputString, it + 1, 3);
                     sc = true;
                     break;
                 case ')':
@@ -134,22 +134,22 @@ public class User
                 case '9':
                     return it;
             }   
-    }
+        }
         
         return -1;
 }
     
-    static int checkdigits(string inputString, int it, int count)
+    static int Checkdigits(string inputString, int it, int count)
     {
-        int new_it = it;
-        for (; new_it < it + count; new_it++)
+        var newIt = it;
+        for (; newIt < it + count; newIt++)
         {
-            if (new_it >= inputString.Length) return -1;
-            if (!Char.IsDigit(inputString[new_it])) return -1;
+            if (newIt >= inputString.Length) return -1;
+            if (!Char.IsDigit(inputString[newIt])) return -1;
         }
         
         
-        return new_it;
+        return newIt;
     }
     
 }
