@@ -45,7 +45,7 @@ public class User
     {
         for (int i = 0; i < inputString.Length; i++)
         {
-            int new_it = check(inputString, i);
+            int new_it = Check(inputString, i);
             if (new_it >= 0)
             {
                 parsedPhone = inputString.Substring(i, new_it - i);
@@ -57,7 +57,7 @@ public class User
         return false;
     }
 
-    static int check(string inputString, int it)
+    static int Check(string inputString, int it)
     {
         if (inputString[it] == '+') it++;
         
@@ -72,17 +72,17 @@ public class User
                 if (new_it < 0) return -1;
                 if (new_it == it + 1 || new_it == it + 2)
                 {
-                    new_it = checkdigits(inputString, new_it, 3);
+                    new_it = Сheckdigits(inputString, new_it, 3);
                     if (new_it == -1) return -1;
                 }
 
-                new_it = checkBlock(inputString, new_it, 3);
+                new_it = CheckBlock(inputString, new_it, 3);
                 if (new_it == -1) return -1;
                 
-                new_it = checkBlock(inputString, new_it, 2);
+                new_it = CheckBlock(inputString, new_it, 2);
                 if (new_it == -1) return -1;
                 
-                new_it = checkBlock(inputString, new_it, 2);
+                new_it = CheckBlock(inputString, new_it, 2);
                 if (new_it == -1) return -1;
 
                 return new_it;
@@ -92,12 +92,12 @@ public class User
         }
     }
 
-    static int checkBlock(string inputString, int it, int cnt)
+    static int CheckBlock(string inputString, int it, int cnt)
     {
         int new_it = checkSep(inputString, it);
         if (new_it < 0) return -1;
         
-        new_it = checkdigits(inputString, new_it, cnt); 
+        new_it = Сheckdigits(inputString, new_it, cnt); 
         return new_it;
     }
     
@@ -111,7 +111,7 @@ public class User
             {
 
                 case '(':
-                    it = checkdigits(inputString, it + 1, 3);
+                    it = Сheckdigits(inputString, it + 1, 3);
                     sc = true;
                     break;
                 case ')':
@@ -131,12 +131,12 @@ public class User
                 case '9':
                     return it;
             }   
-    }
+        }
         
         return -1;
 }
     
-    static int checkdigits(string inputString, int it, int count)
+    static int Сheckdigits(string inputString, int it, int count)
     {
         int new_it = it;
         for (; new_it < it + count; new_it++)
