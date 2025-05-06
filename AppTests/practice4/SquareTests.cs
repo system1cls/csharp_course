@@ -14,7 +14,7 @@ public class SquareTests
             new MyVertex(2, 1)
         );
 
-        Assert.AreEqual(square.CalculateArea(), 1);
+        Assert.That(1, Is.EqualTo(square.CalculateArea()));
     }
 
 

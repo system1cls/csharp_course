@@ -5,7 +5,7 @@ namespace AppTests.practice4;
 public class RectTests
 {
     [Test]
-    public void test1()
+    public void Test1()
     {
         Rectangle rectangle = new Rectangle(
             new MyVertex(1, 1),
@@ -20,7 +20,7 @@ public class RectTests
 
 
     [Test]
-    public void test2()
+    public void Test2()
     {
         Rectangle rectangle = new Rectangle(
             new MyVertex(2, 1),
@@ -35,7 +35,7 @@ public class RectTests
     }
 
     [Test]
-    public void test3()
+    public void Test3()
     {
         Rectangle rectangle = new Rectangle(
             new MyVertex(1, 1),
@@ -49,7 +49,7 @@ public class RectTests
 
 
     [Test]
-    public void test4()
+    public void Test4()
     {
         Rectangle rectangle = new Rectangle(
             new MyVertex(1, 1),
