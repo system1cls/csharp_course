@@ -7,11 +7,10 @@ public class Phone
         for (var i = 0; i < inputString.Length; i++)
         {
             var newIt = Check(inputString, i);
-            if (newIt >= 0)
-            {
-                parsedPhone = inputString.Substring(i, newIt - i);
-                return true;
-            }
+            if (newIt < 0) continue;
+            
+            parsedPhone = inputString.Substring(i, newIt - i);
+            return true;
         }
         
         parsedPhone = null;
@@ -61,8 +60,8 @@ public class Phone
         newIt = CheckDigits(inputString, newIt, cnt); 
         return newIt;
     }
-    
-    static int CheckSeparators(string inputString, int it)
+
+    private static int CheckSeparators(string inputString, int it)
     {
         var isStaplesStarted = false;
         
@@ -78,7 +77,7 @@ public class Phone
                     break;
                 case ')':
                     if (isStaplesStarted) return it + 1;
-                    else return -1;
+                     return -1;
                 case '-':
                     return it + 1;
                 case '0': 
@@ -97,14 +96,14 @@ public class Phone
         
         return -1;
 }
-    
-    static int CheckDigits(string inputString, int it, int count)
+
+    private static int CheckDigits(string inputString, int it, int count)
     {
         var newIt = it;
         for (; newIt < it + count; newIt++)
         {
             if (newIt >= inputString.Length) return -1;
-            if (!Char.IsDigit(inputString[newIt])) return -1;
+            if (!char.IsDigit(inputString[newIt])) return -1;
         }
         
         
