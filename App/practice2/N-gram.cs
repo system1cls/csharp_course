@@ -2,31 +2,33 @@
 
 public class N_gram
 {
-    private class contInfo
+    private class ContInfo
     {
         private string cont;
         private int cnt = 0;
 
-        public contInfo(string cont, int cnt)
+        public ContInfo(string cont, int cnt)
         {
             this.cont = cont;
             this.cnt = cnt;
         }
         
-        public string getCont() => cont;
-        public int getCnt() => cnt;
+        public string GetCont() => cont;
+        public int GetCnt() => cnt;
         
-        public void intCnt() => cnt++;
+        public void IntCnt() => cnt++;
     }
     
     public static Dictionary<string, string> FrequencyAnalysis(string inputString)
     {
-        Dictionary<string, List<contInfo>> frequencyAnalysis = new Dictionary<string, List<contInfo>>();
-        bool isAdded = false;
+        inputString = inputString.ToLower();
         
-        foreach (var str in inputString.Split("."))
+        var frequencyAnalysis = new Dictionary<string, List<ContInfo>>();
+        var isAdded = false;
+        
+        foreach (var str in inputString.Split('.', '!', '?'))
         {
-            var words = str.Split(" ");
+            var words = str.Split(' ', ',', ':', ';');
 
             words = words.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
             
@@ -36,29 +38,29 @@ public class N_gram
                 {
 
                     isAdded = false; 
-                    if (!frequencyAnalysis.ContainsKey(words[i])) frequencyAnalysis[words[i]] = new List<contInfo>(); 
+                    if (!frequencyAnalysis.ContainsKey(words[i])) frequencyAnalysis[words[i]] = new List<ContInfo>(); 
                     foreach  (var node in frequencyAnalysis[words[i]])
                     { 
-                        if (node.getCont().Equals(words[i + 1])) node.intCnt(); 
+                        if (node.GetCont().Equals(words[i + 1])) node.IntCnt(); 
                         isAdded = true; 
                         break; 
                     } 
-                    if (!isAdded) frequencyAnalysis[words[i]].Add(new contInfo(words[i + 1], 1));
+                    if (!isAdded) frequencyAnalysis[words[i]].Add(new ContInfo(words[i + 1], 1));
 
 
                     if (i != 0)
                     {
                         isAdded = false;
                         if (!frequencyAnalysis.ContainsKey(words[i - 1] + " " + words[i])) 
-                            frequencyAnalysis[words[i-1] + " " + words[i]] = new List<contInfo>(); 
+                            frequencyAnalysis[words[i-1] + " " + words[i]] = new List<ContInfo>(); 
                         foreach  (var node in frequencyAnalysis[words[i-1] + " " + words[i]])
                         { 
-                            if (node.getCont().Equals(words[i + 1])) node.intCnt(); 
+                            if (node.GetCont().Equals(words[i + 1])) node.IntCnt(); 
                             isAdded = true; 
                             break; 
                         } 
                         
-                        if (!isAdded) frequencyAnalysis[words[i-1] + " " + words[i]].Add(new contInfo(words[i + 1], 1));
+                        if (!isAdded) frequencyAnalysis[words[i-1] + " " + words[i]].Add(new ContInfo(words[i + 1], 1));
                     }
                 }
             }
@@ -74,12 +76,12 @@ public class N_gram
             
             foreach (var node in frequencyAnalysis[key])
             {
-                max = Math.Max(node.getCnt(), max);
+                max = Math.Max(node.GetCnt(), max);
             }
 
             foreach (var node in frequencyAnalysis[key])
             {
-                if (node.getCnt() == max && (strAns == null) || string.CompareOrdinal(strAns, node.getCont()) > 0) strAns = node.getCont();
+                if (node.GetCnt() == max && (strAns == null) || string.CompareOrdinal(strAns, node.GetCont()) > 0) strAns = node.GetCont();
             }
             ans.Add(key, strAns);
         }  

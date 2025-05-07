@@ -12,6 +12,6 @@ public class INNTests
     [TestCase("263516479611", true)]
     public void Run(string inn, bool except)
     { 
-        Assert.That(except.Equals(INN.IsValidInn(inn)));
+        Assert.That(except.Equals(Inn.IsValidInn(inn)));
     }
 }
