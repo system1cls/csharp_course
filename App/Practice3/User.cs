@@ -14,12 +14,11 @@ public class User
     public string Phone {
         set
         {
-            if (TryUpdatePhone(value)) _phone = value;
-            else _phone = "";
+            TryUpdatePhone(value);
         }
         get { return _phone; }
     }
-    public DateTime RegisterTime { init; get; }
+    public DateTime RegisterTime { get; init; }
     
     public User() 
     {

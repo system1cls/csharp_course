@@ -11,7 +11,7 @@ public class UserTest
         user.Phone = "89230047406";
         Assert.That(CheckStr(user.Phone, "89230047406"), Is.True);
         user.Phone = "59230047406";
-        Assert.That(CheckStr(user.Phone, ""), Is.True);
+        Assert.That(CheckStr(user.Phone, "89230047406"), Is.True);
     }
 
 
